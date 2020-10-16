@@ -15,6 +15,8 @@ using Simulator.Bridge;
 using Simulator.Bridge.Data;
 using Simulator.Utilities;
 using Simulator.Sensors.UI;
+using SimpleJSON;
+using Simulator.Api;
 
 #pragma warning disable CS0649
 
@@ -122,7 +124,14 @@ namespace Simulator.Sensors
             {
                 return;
             }
-
+          
+            var jsonData = new JSONObject();
+            jsonData.Add("velocity", 5);
+            if (ApiManager.Instance != null)
+                {
+                    ApiManager.Instance.AddCustom(transform.parent.gameObject, "test", jsonData);
+                }
+                
             var position = transform.position;
             position.Set(position.z, -position.x, position.y);
             var velocity = transform.InverseTransformDirection(RigidBody.velocity);
